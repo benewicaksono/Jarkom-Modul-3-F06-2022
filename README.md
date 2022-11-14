@@ -73,28 +73,19 @@ iface eth0 inet dhcp
 EDEN
 ```
 auto eth0
-iface eth0 inet static
-  address 192.202.3.2
-  netmask 255.255.255.0
-  gateway 192.202.3.1
+iface eth0 inet dhcp
 ```
 
 NewstonCastle
 ```
 auto eth0
-iface eth0 inet static
-  address 192.202.3.3
-  netmask 255.255.255.0
-  gateway 192.202.3.1
+iface eth0 inet dhcp
 ```
 
 KemonoPark
 ```
 auto eth0
-iface eth0 inet static
-  address 192.202.3.4
-  netmask 255.255.255.0
-  gateway 192.202.3.1
+iface eth0 inet dhcp
 ```
 
 Kemudian di Ostania, jalankan
@@ -107,7 +98,15 @@ Kemudian jalankan pada semua node
 echo nameserver 192.168.122.1 > /etc/resolv.conf
 ```
 
-# Soal 1
+## Requirement:
+Install lynx dan speedtest pada client dengan:
+```
+apt-get update
+apt-get install lynx -y
+apt install speedtest-cli
+```
+
+## Soal 1
 ### Loid bersama Franky berencana membuat peta tersebut dengan kriteria WISE sebagai DNS Server, Westalis sebagai DHCP Server, Berlint sebagai Proxy Server
 
 Pada WISE sebagai DNS Server, dilakukan instalasi bind9
@@ -115,7 +114,6 @@ Pada WISE sebagai DNS Server, dilakukan instalasi bind9
 apt-get update
 apt-get install bind9 -y
 service bind9 start
-service bind9 status
 ```
 
 Pada Westalis sebagai DHCP Server, dilakukan instalasi isc-dhcp-server
@@ -129,10 +127,9 @@ Dan untuk Berlint sebagai Proxy Server, dilakukan instalasi squid.
 apt-get update
 apt-get install squid -y
 service squid restart
-service squid status
 ```
 
-# Soal 2
+## Soal 2
 ### Dan Ostania sebagai DHCP Relay.
 
 Pada Ostania sebagai DHCP Relay, dilakukan instalasi isc-dhcp-relay
@@ -164,7 +161,7 @@ service isc-dhcp-relay restart
 ### Loid dan Franky menyusun peta tersebut dengan hati-hati dan teliti. Ada beberapa kriteria yang ingin dibuat oleh Loid dan Franky, yaitu:
 ### Semua client yang ada HARUS menggunakan konfigurasi IP dari DHCP Server.
 
-# Soal 3
+## Soal 3
 ### Client yang melalui Switch1 mendapatkan range IP dari [prefix IP].1.50 - [prefix IP].1.88 dan [prefix IP].1.120 - [prefix IP].1.155
 
 Karena Westalis adalah DHCP Server, maka dilakukan konfigurasi pada file `/etc/default/isc-dhcp-server`
@@ -202,7 +199,7 @@ service isc-dhcp-server restart
 service isc-dhcp-server status
 ```
 
-# Soal 4
+## Soal 4
 ### Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.10 - [prefix IP].3.30 dan [prefix IP].3.60 - [prefix IP].3.85
 
 Pada Westalis, ditambahkan konfugirasi berikut pada file `/etc/dhcp/dhcpd.conf`
@@ -232,7 +229,7 @@ service isc-dhcp-server restart
 service isc-dhcp-server status
 ```
 
-# Soal 5
+## Soal 5
 ### Client mendapatkan DNS dari WISE dan client dapat terhubung dengan internet melalui DNS tersebut.
 
 Pada Wise, ditambahkan konfugirasi berikut pada file `/etc/bind/named.conf.options`
@@ -264,7 +261,7 @@ ping google.com
   <img src="images/5-3.png" width="600">
 </p><br>
 
-# Soal 6
+## Soal 6
 ### Lama waktu DHCP server meminjamkan alamat IP kepada Client yang melalui Switch1 selama 5 menit sedangkan pada client yang melalui Switch3 selama 10 menit. Dengan waktu maksimal yang dialokasikan untuk peminjaman alamat IP selama 115 menit.
 
 Pada Westalis, ditambahkan konfugirasi berikut pada file `/etc/bind/named.conf.options`
@@ -303,8 +300,7 @@ service isc-dhcp-server restart
 service isc-dhcp-server status
 ```
 
-
-# Soal 7
+## Soal 7
 ### Loid dan Franky berencana menjadikan Eden sebagai server untuk pertukaran informasi dengan alamat IP yang tetap dengan IP [prefix IP].3.13 
 
 Pada Westalis, ditambahkan konfugirasi berikut pada file `/etc/bind/named.conf`
@@ -318,38 +314,71 @@ host Eden {
   <img src="images/7.png" width="600">
 </p><br>
 
-Lalu dilanjutkan dengan
-```
-apt-get update
-apt-get install lynx
-```
-
-
 # Proxy Server
-## SSS, Garden, dan Eden digunakan sebagai client Proxy agar pertukaran informasi dapat terjamin keamanannya, juga untuk mencegah kebocoran data. Pada Proxy Server di Berlint, Loid berencana untuk mengatur bagaimana Client dapat mengakses internet. Artinya setiap client harus menggunakan Berlint sebagai HTTP & HTTPS proxy. Adapun kriteria pengaturannya adalah sebagai berikut:
+### SSS, Garden, dan Eden digunakan sebagai client Proxy agar pertukaran informasi dapat terjamin keamanannya, juga untuk mencegah kebocoran data. Pada Proxy Server di Berlint, Loid berencana untuk mengatur bagaimana Client dapat mengakses internet. Artinya setiap client harus menggunakan Berlint sebagai HTTP & HTTPS proxy. Adapun kriteria pengaturannya adalah sebagai berikut:
 
-# Soal 1
+
+## Soal 1
 ### Client hanya dapat mengakses internet diluar (selain) hari & jam kerja (senin-jumat 08.00 - 17.00) dan hari libur (dapat mengakses 24 jam penuh)
 
-# Soal 2
+## Soal 2
 ### Adapun pada hari dan jam kerja sesuai nomor (1), client hanya dapat mengakses domain loid-work.com dan franky-work.com (IP tujuan domain dibebaskan)
 
-# Soal 3
+## Soal 3
 ### Saat akses internet dibuka, client dilarang untuk mengakses web tanpa HTTPS. (Contoh web HTTP: http://example.com)
 
-# Soal 4
+## Soal 4
 ### Agar menghemat penggunaan, akses internet dibatasi dengan kecepatan maksimum 128 Kbps pada setiap host (Kbps = kilobit per second; lakukan pengecekan pada tiap host, ketika 2 host akses internet pada saat bersamaan, keduanya mendapatkan speed maksimal yaitu 128 Kbps)
 
-# Soal 5
+## Soal 5
 ### Setelah diterapkan, ternyata peraturan nomor (4) mengganggu produktifitas saat hari kerja, dengan demikian pembatasan kecepatan hanya diberlakukan untuk pengaksesan internet pada hari libur
 
+### ``Jawab:``
+Pada WISE, buat zone ``loid-work.com`` dan ``franky-work.com`` dengan mengarah pada IP berikut:
 
+<p align="center">
+  <img src="images/8-1.png" width="600">
+</p><br>
+<p align="center">
+  <img src="images/8-2.png" width="600">
+</p><br>
+<p align="center">
+  <img src="images/8-3.png" width="600">
+</p><br>
 
+Kemudian pada Berlint, buat file .acl berisi allowed-sites:
+<p align="center">
+  <img src="images/8-4.png" width="600">
+</p><br>
 
+Lalu konfigurasi pada ``squid.conf.local``:
+<p align="center">
+  <img src="images/8-5.png" width="600">
+</p><br>
 
+yang mana akan menggunakan port 8080, deny http_access pada WORKING_DAYS (senin-jumat 08.00 - 17.00), allow WHITELISTS (allowed-sites) pada WORKING_DAYS, dan deny http_access apabila url menggunakan ``http:``
 
+Kemudian pada client:
+<p align="center">
+  <img src="images/8-6.png" width="600">
+</p><br>
 
-
-
-
-
+### ``Testing:``
+Pada hari Jum'at pukul 18.00:
+<p align="center">
+  <img src="images/8-7.png" width="600">
+</p><br>
+<p align="center">
+  <img src="images/8-8.png" width="600">
+  
+Pada Jum'at pukul 10.00:
+</p><br>
+<p align="center">
+  <img src="images/8-9.png" width="600">
+</p><br>
+<p align="center">
+  <img src="images/8-10.png" width="600">
+</p><br>
+<p align="center">
+  <img src="images/8-11.png" width="600">
+</p><br>
