@@ -8,10 +8,13 @@
 | Andhika Ditya Bagaskara D.       |  5025201096   |
 | Theresia Nawangsih               |  5025201144   |
 
-# Soal 1
-### Loid bersama Franky berencana membuat peta tersebut dengan kriteria WISE sebagai DNS Server, Westalis sebagai DHCP Server, Berlint sebagai Proxy Server.
+# Topologi
 
-Pertama, dilakukan konfigurasi untuk masing-masing node.
+<p align="center">
+  <img src="images/topology.png" width="600">
+</p><br>
+
+# Konfigurasi
 
 WISE -> DNS Server
 ```
