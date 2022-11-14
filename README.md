@@ -145,6 +145,9 @@ dan tambahkan
 SERVERS = "192.202.2.4"
 INTERFACES = "eth1 eth2 eth3"
 ```
+<p align="center">
+  <img src="images/2-1.png" width="600">
+</p><br>
 
 setelah itu, restart isc-dhcp-relay.
 ```
@@ -160,6 +163,9 @@ Karena Westalis adalah DHCP Server, maka dilakukan konfigurasi pada file `/etc/d
 ```
 INTERFACES = "eth0"
 ```
+<p align="center">
+  <img src="images/3-1.png" width="600">
+</p><br>
 
 Kemudian tambahkan konfugirasi berikut pada file `/etc/dhcp/dhcpd.conf`
 ```
@@ -177,6 +183,9 @@ subnet 10.8.1.0 netmask 255.255.255.0 {
   max-lease-time 7200;
 }
 ```
+<p align="center">
+  <img src="images/3-2.png" width="600">
+</p><br>
 
 Setelah itu, restart isc-dhcp-server.
 ```
